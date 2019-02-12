@@ -296,11 +296,11 @@ D:\qipai\bl\src\网站代码\Admin\Admin\bin\zh-Hans\System.Web.Http.WebHost.res
 D:\qipai\bl\src\网站代码\Admin\Admin\obj\Debug\Admin.csprojResolveAssemblyReference.cache
 D:\qipai\bl\src\网站代码\Admin\Admin\obj\Debug\Admin.dll
 D:\qipai\bl\src\网站代码\Admin\Admin\obj\Debug\Admin.pdb
+D:\works\网站代码3\Admin\Admin\bin\EntityFramework.dll
 D:\works\网站代码3\Admin\Admin\bin\Admin.dll.config
 D:\works\网站代码3\Admin\Admin\bin\Admin.dll
 D:\works\网站代码3\Admin\Admin\bin\Admin.pdb
 D:\works\网站代码3\Admin\Admin\bin\Codeplex.Data.dll
-D:\works\网站代码3\Admin\Admin\bin\EntityFramework.dll
 D:\works\网站代码3\Admin\Admin\bin\EntityFramework.SqlServer.dll
 D:\works\网站代码3\Admin\Admin\bin\Game.Entity.dll
 D:\works\网站代码3\Admin\Admin\bin\Game.Facade.dll

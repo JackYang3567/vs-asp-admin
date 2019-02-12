@@ -93,24 +93,37 @@ namespace Game.Facade
 		{
 			[Description("比赛图片")]
 			MatchImg = 1,
+
 			[Description("编辑器图片")]
 			EditImg,
+
 			[Description("移动端新闻图片")]
 			MobileImg,
+
 			[Description("pc端新闻图片")]
 			PcNewsImg,
+
 			[Description("规则图片")]
 			RulesImg,
+
 			[Description("活动图片")]
 			ActivityImg,
+
 			[Description("网站Logo图片")]
-			SiteLogoImg,
+            SiteLogoImg,
+
 			[Description("网站后台LOGO图片")]
 			SiteAdminlogoImg,
+
 			[Description("移动版网站LOGO")]
 			SiteMobileLogoImg,
+
 			[Description("移动版注册网站LOGO图片")]
-			SiteMobileRegLogoImg
+			SiteMobileRegLogoImg,
+
+            [Description("代理商收款二维码图片")]
+            OffLinePayQrCodeImg
+            
 		}
 
 		public enum MemberType

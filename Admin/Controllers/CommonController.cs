@@ -144,6 +144,7 @@ namespace Admin.Controllers
 						num2 = 0;
 						text = "/Content/Upload/Activity/";
 						break;
+                   
 					case EnumerationList.UploadFileEnum.SiteLogoImg:
 						num2 = 7;
 						text = "/Content/Upload/Site/";
@@ -160,6 +161,10 @@ namespace Admin.Controllers
 						num2 = 10;
 						text = "/Content/Upload/Site/";
 						break;
+                    case EnumerationList.UploadFileEnum.OffLinePayQrCodeImg:
+                        num2 = 11;
+                        text = "/Content/Upload/OffLinePayQrCode/";
+                        break;
 					}
 					HttpPostedFileBase httpPostedFileBase = base.Request.Files[0];
 					if (!string.IsNullOrEmpty(text))
@@ -204,6 +209,12 @@ namespace Admin.Controllers
 							str = "MobileRegLogo.png";
 							text2 += str;
 						}
+
+                        if (num2 == 11)
+                        {
+                            str = DateTime.Now.ToString("yyyyMMddHHmmss") + "_QrCode.png";
+                            text2 += str;
+                        }
 						if (flag)
 						{
 							string path = text2.Substring(0, text2.LastIndexOf("\\"));

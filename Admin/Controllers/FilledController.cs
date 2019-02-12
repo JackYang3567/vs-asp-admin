@@ -2895,7 +2895,8 @@ namespace Admin.Controllers
             DataTable payQudaoList = FacadeManage.aideTreasureFacade.GetPayQudaoOfOffLinePaymentList();
             return View(payQudaoList);
         }
-         [CheckCustomer]
+
+        [CheckCustomer]
         public JsonResult GetOffLineQrCodeList()
         {
             int pageIndex = TypeUtil.ObjectToInt(base.Request["pageIndex"], 1);
@@ -2917,14 +2918,42 @@ namespace Admin.Controllers
             });
         }
 
-        
+        [CheckCustomer]
+        public JsonResult DelOffLineQrCodeImg()
+        {
+
+            string _iconPath = TypeUtil.ObjectToString(base.Request["path"]);
+            string iconPath = TypeUtil.GetMapPath("~/Content/Upload/OffLinePayQrCode/" + base.Request["path"]);
+            try
+            {
+                if (_iconPath != "")
+                {
+                    System.IO.File.Delete(iconPath);
+                }
+
+                return Json(new
+                {
+                    IsOk = true,
+                    Msg = "操作成功" + iconPath
+                   
+                });
+            }
+            catch
+            {
+                return Json(new
+                {
+                    IsOk = false,
+                    Msg = "删除失败"
+                });
+            }
+        }
 
          [CheckCustomer]
          public JsonResult DelOffLineQrCode()
         {
             string text = TypeUtil.ObjectToString(base.Request["cid"]);
             string _iconPath = TypeUtil.ObjectToString(base.Request["path"]);
-            string iconPath = TypeUtil.GetMapPath("~"+base.Request["path"]);
+            string iconPath = TypeUtil.GetMapPath("~/Content/Upload/OffLinePayQrCode/" + base.Request["path"]);
          
 
             // string FileInfo; "~/"
@@ -2979,89 +3008,177 @@ namespace Admin.Controllers
         }
 
          [CheckCustomer]
-         public JsonResult AddOffLineQrCode()
+         public ActionResult OffLineQrCodeInfo()
          {
-           
-             int PaymentTypeID = TypeUtil.ObjectToInt(base.Request["PaymentTypeID"], 0);
-             int OwnerID = TypeUtil.ObjectToInt(base.Request["OwnerID"], 0);
-             string PaymentName = TypeUtil.ObjectToString(base.Request["PaymentName"]);
+             int ID = TypeUtil.ObjectToInt(base.Request["param"]);
+             base.ViewBag.ID = ID;
+             base.ViewData["data"] = null;
+             if (ID > 0)
+             {
+                 OffLineQrCode offLineQrCode = FacadeManage.aideTreasureFacade.GetOffLineQrCode(ID);
+                 base.ViewData["data"] = offLineQrCode;
+             }
+             return View();
+         }
 
-             if (PaymentTypeID <= 0 || OwnerID < 0)
+         [CheckCustomer]
+         [ValidateInput(false)]
+         [AntiSqlInjection]
+         public JsonResult DoOffLineQrCodeInfo(OffLineQrCode entity)
+         {
+             if (entity == null)
              {
                  return Json(new
                  {
                      IsOk = false,
-                     Msg = "参数错误"
+                     Msg = "没有提交数据"
                  });
              }
-             if (PaymentName == "")
+             if (user != null)
              {
-                 return Json(new
+                 AdminPermission adminPermission = new AdminPermission(user, user.MoudleID);
+                 if (!adminPermission.GetPermission(4L))
                  {
-                     IsOk = false,
-                     Msg = "参数错误"
-                 });
+                     return Json(new
+                     {
+                         IsOk = false,
+                         Msg = "没有权限",
+                         Url = "/NoPower/Index"
+                     });
+                 }
              }
-             int num4 = 0;
-             num4 = ((PaymentName != "") ? FacadeManage.aideTreasureFacade.AddOffLineQrCode(PaymentTypeID, OwnerID, PaymentName) : 0);
-             if (num4 > 0)
+             if (!string.IsNullOrEmpty(entity.IconPath))
              {
-                 return Json(new
+                 if (entity.ID >= 1)
                  {
-                     IsOk = true,
-                     Msg = "保存成功"
-                 });
+                    
+                     try
+                     {
+                         FacadeManage.aideTreasureFacade.UpdateOffLineQrCode(entity);
+                         return Json(new
+                         {
+                             IsOk = true,
+                             Msg = "更新成功"
+                         });
+                     }
+                     catch
+                     {
+                         return Json(new
+                         {
+                             IsOk = false,
+                             Msg = "更新失败"
+                         });
+                     }
+                 }
+                 try
+                 {
+                     FacadeManage.aideTreasureFacade.AddOffLineQrCode(entity);
+                     return Json(new
+                     {
+                         IsOk = true,
+                         Msg = "新增成功"
+                     });
+                 }
+                 catch
+                 {
+                     return Json(new
+                     {
+                         IsOk = false,
+                         Msg = "新增失败"
+                     });
+                 }
              }
              return Json(new
              {
                  IsOk = false,
-                 Msg ="保存失败"
+                 Msg = "请上传图片"
              });
          }
 
+         //[CheckCustomer]
+         //public JsonResult AddOffLineQrCode()
+         //{
+           
+         //    int PaymentTypeID = TypeUtil.ObjectToInt(base.Request["PaymentTypeID"], 0);
+         //    int OwnerID = TypeUtil.ObjectToInt(base.Request["OwnerID"], 0);
+         //    string PaymentName = TypeUtil.ObjectToString(base.Request["PaymentName"]);
+
+         //    if (PaymentTypeID <= 0 || OwnerID < 0)
+         //    {
+         //        return Json(new
+         //        {
+         //            IsOk = false,
+         //            Msg = "参数错误"
+         //        });
+         //    }
+         //    if (PaymentName == "")
+         //    {
+         //        return Json(new
+         //        {
+         //            IsOk = false,
+         //            Msg = "参数错误"
+         //        });
+         //    }
+         //    int num4 = 0;
+         //    num4 = ((PaymentName != "") ? FacadeManage.aideTreasureFacade.AddOffLineQrCode(PaymentTypeID, OwnerID, PaymentName) : 0);
+         //    if (num4 > 0)
+         //    {
+         //        return Json(new
+         //        {
+         //            IsOk = true,
+         //            Msg = "保存成功"
+         //        });
+         //    }
+         //    return Json(new
+         //    {
+         //        IsOk = false,
+         //        Msg ="保存失败"
+         //    });
+         //}
 
 
-        [CheckCustomer]
-         public JsonResult UpdateOffLineQrCode()
-		{
-            int ID = TypeUtil.ObjectToInt(base.Request["ID"], 0);
-            int PaymentTypeID = TypeUtil.ObjectToInt(base.Request["PaymentTypeID"], 0);
-            int OwnerID = TypeUtil.ObjectToInt(base.Request["OwnerID"], 0);
-            string PaymentName = TypeUtil.ObjectToString(base.Request["PaymentName"]);
 
-            string IconPath = TypeUtil.ObjectToString(base.Request["IconPath"]);
-            if (PaymentTypeID <= 0 || OwnerID < 0)
-			{
-				return Json(new
-				{
-					IsOk = false,
-					Msg = "参数错误"
-				});
-			}
-            if (PaymentName == "")
-			{
-				return Json(new
-				{
-					IsOk = false,
-					Msg = "参数错误"
-				});
-			}
-            int num4 = 0;
-            num4 = ((PaymentName != "") ? FacadeManage.aideTreasureFacade.UpdateOffLineQrCode(PaymentTypeID, OwnerID, PaymentName, IconPath, ID) : 0);
-			if (num4 > 0)
-			{
-				return Json(new
-				{
-					IsOk = true,
-					Msg = "保存成功"
-				});
-			}
-			return Json(new
-			{
-				IsOk = false,
-				Msg = "保存失败"
-			});
-		}
+        //[CheckCustomer]
+        // public JsonResult UpdateOffLineQrCode()
+        //{
+        //    int ID = TypeUtil.ObjectToInt(base.Request["ID"], 0);
+        //    int PaymentTypeID = TypeUtil.ObjectToInt(base.Request["PaymentTypeID"], 0);
+        //    int OwnerID = TypeUtil.ObjectToInt(base.Request["OwnerID"], 0);
+        //    string PaymentName = TypeUtil.ObjectToString(base.Request["PaymentName"]);
+
+        //    string IconPath = TypeUtil.ObjectToString(base.Request["IconPath"]);
+        //    if (PaymentTypeID <= 0 || OwnerID < 0)
+        //    {
+        //        return Json(new
+        //        {
+        //            IsOk = false,
+        //            Msg = "参数错误"
+        //        });
+        //    }
+        //    if (PaymentName == "")
+        //    {
+        //        return Json(new
+        //        {
+        //            IsOk = false,
+        //            Msg = "参数错误"
+        //        });
+        //    }
+        //    int num4 = 0;
+        //    num4 = ((PaymentName != "") ? FacadeManage.aideTreasureFacade.UpdateOffLineQrCode(PaymentTypeID, OwnerID, PaymentName, IconPath, ID) : 0);
+        //    if (num4 > 0)
+        //    {
+        //        return Json(new
+        //        {
+        //            IsOk = true,
+        //            Msg = "保存成功"
+        //        });
+        //    }
+        //    return Json(new
+        //    {
+        //        IsOk = false,
+        //        Msg = "保存失败"
+        //    });
+        //}
         /*
         [CheckCustomer]
         public ActionResult PayAmountList()

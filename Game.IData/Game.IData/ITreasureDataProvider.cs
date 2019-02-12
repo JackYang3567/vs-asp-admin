@@ -237,6 +237,12 @@ namespace Game.IData
 
 		PagerSet GetList(string tableName, int pageIndex, int pageSize, string condition, string orderby);
 
+        OffLineQrCode GetOffLineQrCode(int id);
+
+        void AddOffLineQrCode(OffLineQrCode model);
+
+        void UpdateOffLineQrCode(OffLineQrCode model);
+
 		int ExecuteSql(string sql);
 
 		DataSet GetDataSetBySql(string sql);

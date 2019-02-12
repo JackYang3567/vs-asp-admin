@@ -1174,8 +1174,11 @@
     <Content Include="Views\Trade\LotteryBetDraw.cshtml" />
     <Content Include="Views\Filled\OffLinePayList.cshtml" />
     <Content Include="Views\Filled\OffLineQrCodeList.cshtml" />
+    <Content Include="Views\Filled\OffLineQrCodeInfo.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Upload\OffLinePayQrCode\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

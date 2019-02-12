@@ -1,8 +1,9 @@
-﻿@{
+﻿
+@{
     Layout = null;
     ViewBag.Title = "充值系统 - 线下充值二维码";
+ 
 }
-@model System.Data.DataTable
 <!DOCTYPE html>
 
 <html>
@@ -35,22 +36,7 @@
                 <div class="box-header well clearfix" data-original-title="">
                     <h2><i class="glyphicon glyphicon-hand-right"></i>目前操作功能：@ViewBag.Title</h2>
                 </div>
-                <!--
-                <ul class="media nav nav-tabs">
-                    @if (Model.Rows.Count > 0)
-                    {
-                        foreach (System.Data.DataRow row in Model.Rows)
-                        {
-
-                    
-                            <li data-id="@row["ID"]"><a href="javascript:void(0)">@row["QudaoName"]</a></li>
-
-
-
-                        }
-                    }
-                </ul>
-                    -->
+              
                 <div class="box-content" style="overflow: hidden; display: block;">
                     <div class="row">
                         <div class="col-md-2">
@@ -69,10 +55,9 @@
 
                         <div class="col-md-10" style="padding-bottom:5px; padding-top:5px; text-align:right;">
                             <div class="btn-group btn-group">
-                                <button type="button" class="btn btn-success" onclick="add();"><i class="glyphicon glyphicon-plus icon-white"></i>添加代理商收款方式</button>
-                                <!--
-                                <button type="button" class="btn btn-danger" onclick="del(0);"><i class="glyphicon glyphicon-trash icon-white"></i>删除</button>
-                                    -->
+                                <a class="btn btn-success" href="@Url.Action("OffLineQrCodeInfo", "Filled")?"> <i class="glyphicon glyphicon-plus-sign icon-white"></i>添加代理商收款方式 </a>
+                             
+                             
                             </div>
                         </div>
 
@@ -110,84 +95,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!--
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    上传二维码图片
-                </h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    状态：<input type="text" id="txtAmount" class="form-control" maxlength="10" />
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    关闭
-                </button>
-                <button type="button" id="btnSave" class="btn btn-primary">
-                    提交更改
-                </button>
-            </div>
-            -->
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        添加代理商收款方式
-                    </h4>
-                </div>
-               <form target="the_iframe"
-                      method="post"
-                      enctype="multipart/form-data"
-                      action="/Common/UploadFileToLocal?op=6&amp;dir=image"> 
-                   
-                        <div class="modal-body">
-                            <p>
-                                支付方式：<span id="showpaymothd" style="color:red;"></span><span id="paymothd"><input type="radio" name="PaymentTypeID"
-                                            class="PaymentTypeID btn" value="4" id="PaymentTypeID_4" />支付宝扫码
-                                &nbsp;&nbsp;<input type="radio" name="PaymentTypeID" id="PaymentTypeID_5" class="PaymentTypeID btn" value="5" />微信扫码</span>
-                            </p>
-                            <p>&nbsp;</p>
-                            <p>代理商ID :<span id="showOwnerId" style="color:red;"></span><span id="addOwnerId"><input type="text" name="OwnerID" id="OwnerID" class="OwnerID form-control" /></span> </p>
-                            <p>&nbsp;</p>
-                            <p id="upload_div">
-                            上传文件：
-
-                             @*<input type="text" name="localUrl" class="form-control"  style="width:200px;"  />&nbsp;
-                <span class="ke-button-common"><input type="button" class="ke-button-common ke-button" value="浏览..."></span>*@
-                            <input type="file" class="form-control" name="imgFile" id="imgFile"   />
-                            </p>
-                        </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        关闭
-                    </button>
-                    <button type="button" id="btnSave" class="btn btn-primary">
-                        添加保存
-                    </button>
-                    <button type="submit" id="btnUploadSave" class="btn btn-primary">
-                        上传保存
-                    </button>
-                </div>
-                    </form>
-
-                    <iframe id="is_iframe" name="the_iframe" style="display:none;"></iframe>
-
-
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-
-
+   
        
         </div>
     <script type="text/javascript">
@@ -209,67 +117,9 @@
                 AjaxSearch(postData);
             })
 
-            $('#btnSave').click(function () {
-                save();
-            })
+           
         })
         var id = 0;
-        function add() {
-            id = 0;
-           // $("#txtAmount").val("");
-            $("#myModalLabel").html("添加代理商收款方式");
-            $('#myModal').modal('show');
-            $("#btnUploadSave").hide();
-            $("#upload_div").hide();
-        }
-        function update(pid, ownerID, IconPath, PaymentTypeID) {
-            id = pid;
-            if (parseInt(PaymentTypeID) == 4) {
-                $("#showpaymothd").html(" 支付宝扫码");
-            }
-            if (parseInt(PaymentTypeID) == 5) {
-                $("#showpaymothd").html(" 微信扫码");
-            }
-            $("#btnSave").hide();
-            $("#addOwnerId").hide();
-            $("#paymothd").hide();
-            $("#showOwnerId").html('&nbsp;&nbsp;'+ownerID);
-            $("#myModalLabel").html("上传二维码图片");
-            $("#OwnerID").val(ownerID);
-            $('#myModal').modal('show');
-        }
-        function save() {
-            var paymentName = "";
-            var ownerID = $("#OwnerID").val();
-            var paymentTypeID = $('input:radio[name=PaymentTypeID]:checked').val();
-            var _imgFile = $("#imgFile").val();
-           
-           
-            if (ownerID == "") {
-                alert("请输入代理商ID");
-                return false;
-            }
-            if (isNaN(paymentTypeID)) {
-                alert("请选择支付方式");
-                return false;
-            }
-            //if (_imgFile == "") {
-            //    alert("请选择二维码图片");
-            //    return false;
-            //}
-
-            if (parseInt(paymentTypeID) == 4) {
-                 paymentName = "支付宝扫码";
-            }
-            if (parseInt(paymentTypeID) == 5) {
-                paymentName = "微信扫码";
-            }
-           // var data = { PaymentTypeID: paymentTypeID, OwnerID: ownerID, IconPath: _imgFile, PaymentName: paymentName };
-            var data = { PaymentTypeID: paymentTypeID, OwnerID: ownerID, PaymentName: paymentName };
-            console.log(data)
-            AjaxSubmit("/Filled/AddOffLineQrCode", data, callBack, "save");
-           
-        }
         function del(pid, ownerID, IconPath, PaymentTypeID) {
             var data = {};
             var cid = "";
@@ -302,9 +152,9 @@
                     html += stringFormat("<tr>");
                    // html += stringFormat("<td><input name='cid' type='checkbox' value='{0}'/></td>", item.ID);
                     html += stringFormat("<td>{0}</td>", item.PaymentName);
-                    html += stringFormat("<td><img src={0} height={1} /></td>", item.IconPath,60);
+                    html += stringFormat("<td><img src={0} height={1} /></td>", "/Content/Upload/OffLinePayQrCode/" + item.IconPath, 60);
                     html += stringFormat("<td>{0}</td>", item.OwnerID);
-                    html += stringFormat("<td><a href=\"javascript:void(0)\" onclick=\"update({0},{1},'{2}','{3}')\">上传二维码</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0)\" onclick=\"del({0},{1},'{2}','{3}')\">删除</a></td>", item.ID, item.OwnerID, item.IconPath, item.PaymentTypeID);
+                    html += stringFormat("<td><a class=\"l\" href=\"@Url.Action("OffLineQrCodeInfo", "Filled")?param={0}\">更新</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0)\" onclick=\"del({0},{1},'{2}','{3}')\">删除</a></td>", item.ID, item.OwnerID, item.IconPath, item.PaymentTypeID);
                     html += "</tr>";
                 });
             }

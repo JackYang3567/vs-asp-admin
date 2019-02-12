@@ -811,6 +811,30 @@ namespace Game.Facade
             return aideTreasureData.ExecuteSql(sql);
         }
 
+        //public OffLineQrCode GetOffLineQrCode(int ID)
+        //{
+        //    string sql = "SELECT WinScore,WinRate,Accounts,ServerID FROM OffLinePayQrCode WHERE ID=" + ID;
+        //    return aideTreasureData.GetDataSetBySql(sql).Tables[0];
+        //}
+
+        public OffLineQrCode GetOffLineQrCode(int id)
+        {
+            return aideTreasureData.GetOffLineQrCode(id);
+        }
+
+
+        public void AddOffLineQrCode(OffLineQrCode model)
+		{
+            aideTreasureData.AddOffLineQrCode(model);
+		}
+
+        public void UpdateOffLineQrCode(OffLineQrCode model)
+		{
+            aideTreasureData.UpdateOffLineQrCode(model);
+		}
+
+
+
         public int DelOffLineQrCode(string sqlWhere)
         {
             string sql = "DELETE OffLinePayQrCode " + sqlWhere;

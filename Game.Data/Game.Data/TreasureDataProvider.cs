@@ -648,6 +648,41 @@ namespace Game.Data
 			list.Add(base.Database.MakeInParam("UserID", userID));
 			return base.Database.ExecuteObject<UserCurrencyInfo>(commandText, list);
 		}
+       
+        public OffLineQrCode GetOffLineQrCode(int id)
+        {
+            string commandText = "SELECT * FROM OffLinePayQrCode WHERE ID=@ID";
+            List<DbParameter> list = new List<DbParameter>();
+            list.Add(base.Database.MakeInParam("ID", id));
+            return base.Database.ExecuteObject<OffLineQrCode>(commandText, list);
+        }
+
+        public void AddOffLineQrCode(OffLineQrCode model)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("INSERT INTO OffLinePayQrCode(PaymentName,IconPath,PaymentTypeID,OwnerID) ");
+            stringBuilder.Append("VALUES(@PaymentName,@IconPath,@PaymentTypeID,@OwnerID)");
+            List<DbParameter> list = new List<DbParameter>();
+            list.Add(base.Database.MakeInParam("PaymentName", model.PaymentName));
+            list.Add(base.Database.MakeInParam("IconPath", model.IconPath));
+            list.Add(base.Database.MakeInParam("PaymentTypeID", model.PaymentTypeID));
+            list.Add(base.Database.MakeInParam("OwnerID", model.OwnerID));
+            base.Database.ExecuteNonQuery(CommandType.Text, stringBuilder.ToString(), list.ToArray());
+        }
+
+        public void UpdateOffLineQrCode(OffLineQrCode model)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("UPDATE OffLinePayQrCode SET PaymentName=@PaymentName,IconPath=@IconPath,PaymentTypeID=@PaymentTypeID,OwnerID=@OwnerID ");
+            stringBuilder.Append("WHERE ID=@ID");
+            List<DbParameter> list = new List<DbParameter>();
+            list.Add(base.Database.MakeInParam("PaymentName", model.PaymentName));
+            list.Add(base.Database.MakeInParam("IconPath", model.IconPath));
+            list.Add(base.Database.MakeInParam("PaymentTypeID", model.PaymentTypeID));
+            list.Add(base.Database.MakeInParam("OwnerID", model.OwnerID));
+            list.Add(base.Database.MakeInParam("ID", model.ID));
+            base.Database.ExecuteNonQuery(CommandType.Text, stringBuilder.ToString(), list.ToArray());
+        }
 
 		public PagerSet GetRecordDrawInfoList(int pageIndex, int pageSize, string condition, string orderby)
 		{

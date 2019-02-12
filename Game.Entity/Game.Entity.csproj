@@ -214,6 +214,7 @@
     <Compile Include="Game.Entity.Treasure\LotteryItem.cs" />
     <Compile Include="Game.Entity.Treasure\MemberCard.cs" />
     <Compile Include="Game.Entity.Treasure\MemberType.cs" />
+    <Compile Include="Game.Entity.Treasure\OffLineQrCode.cs" />
     <Compile Include="Game.Entity.Treasure\OnLineOrder.cs" />
     <Compile Include="Game.Entity.Treasure\PlayerControl.cs" />
     <Compile Include="Game.Entity.Treasure\RecordAgentInfo.cs" />

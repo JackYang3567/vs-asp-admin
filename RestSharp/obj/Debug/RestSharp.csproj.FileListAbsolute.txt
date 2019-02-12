@@ -25,3 +25,4 @@ D:\works\网站代码3\Admin\RestSharp\bin\Debug\RestSharp.dll
 D:\works\网站代码3\Admin\RestSharp\bin\Debug\RestSharp.pdb
 D:\works\网站代码3\Admin\RestSharp\obj\Debug\RestSharp.dll
 D:\works\网站代码3\Admin\RestSharp\obj\Debug\RestSharp.pdb
+D:\works\网站代码3\Admin\RestSharp\obj\Debug\RestSharp.csprojResolveAssemblyReference.cache
